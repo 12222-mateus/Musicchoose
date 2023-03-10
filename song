@@ -1,0 +1,526 @@
+#include<stdio.h>							  
+
+#include<stdlib.h> 
+
+#include<string.h> 
+
+#include<locale.h> 
+
+ 
+ 
+
+int menu(); 
+
+void InserirInicio(); 
+
+void InserirFim(); 
+
+void InserirMeio(); 
+
+ 
+ 
+
+ 
+ 
+
+void Listar(); 
+
+ 
+ 
+
+struct ElementoDaLista_Simples { 
+
+ 
+ 
+
+char dado[30];	//usado para dados da música  
+
+char dado3[30]; 	//usado para dados do artista_banda  
+
+float dado2;		//usado para dados da duração 
+
+struct ElementoDaLista_Simples* prox; 
+
+} *Head; 
+
+ 
+ 
+
+int main() { 
+
+setlocale(LC_ALL, "Portuguese");	//Permite a utilização de acentos e letras em português 
+
+Head = NULL; 
+
+int op; 
+
+ 
+ 
+
+while (1) { 
+
+ 
+ 
+
+op = menu(); 
+
+switch (op) { //usado para as opções que o usuario pretende escolher 
+
+case 1: 
+
+ 
+ 
+
+InserirInicio(); 
+
+break; 
+
+case 2: 
+
+ 
+ 
+
+InserirFim(); 
+
+break; 
+
+ 
+ 
+
+case 3: 
+
+ 
+ 
+
+InserirMeio(); 
+
+break; 
+
+ 
+ 
+
+case 4: 
+
+Listar(); 
+
+break; 
+
+case 5: 
+
+return 0; 
+
+default: 
+
+printf("Invalido\n"); 
+
+} 
+
+} 
+
+return 0; 
+
+} 
+
+ 
+ 
+
+int menu() { //menu que é impresso na tela 
+
+int op, c; 
+
+system("Cls"); 
+
+ 
+ 
+
+printf("1.Inserir no início o nome de cada música, do artista/banda e duração:\n"); 
+
+printf("2.Inserir no fim o nome de cada música, do artista/banda e duração:\n"); 
+
+printf("3.Inserir no meio o nome de cada música, do artista/banda e duração:\n"); 
+
+printf("4.Listar a lista \n"); 
+
+printf("5.Sair\n"); 
+
+printf("Digite sua escolha: "); 
+
+ 
+ 
+
+scanf_s("%d", &op); // recebe a opção que o usuário escolheu 
+
+while ((c = getchar()) != '\n' && c != EOF) {} // sempre limpe o buffer do teclado. 
+
+ 
+ 
+
+system("Cls"); 
+
+return op; 
+
+} 
+
+ 
+ 
+
+void InserirInicio() 
+
+{ 
+
+int op, num, pos, c; //variáveis do tipo int 
+
+float duracao; //variável do tipo float 
+
+char musica[30]; //variável do tipo char 
+
+char banda_artista[30]; //variáveis do tipo char 
+
+ 
+ 
+
+printf("Nome da música: "); 
+
+gets(musica);	//recebe a música  
+
+printf("Nome da banda/artista: "); 
+
+gets(banda_artista);	//recebe a banda ou artista  
+
+printf("duração(minutos): "); 
+
+scanf_s("%f", &duracao);	//recebe a duração  
+
+while ((c = getchar()) != '\n' && c != EOF) {} 
+
+ 
+ 
+
+ElementoDaLista_Simples* NovoElemento; 
+
+NovoElemento = (struct ElementoDaLista_Simples*)malloc(sizeof(struct ElementoDaLista_Simples)); 
+
+strcpy(NovoElemento->dado, musica); //strcpy é usado para copiar variável do tipo string 
+
+strcpy(NovoElemento->dado3, banda_artista); //strcpy é usado para copiar variável do tipo string 
+
+NovoElemento->dado2 = duracao; 
+
+ 
+ 
+
+if (Head == NULL) 
+
+{ 
+
+Head = NovoElemento; 
+
+Head->prox = NULL; 
+
+} 
+
+else 
+
+{ 
+
+NovoElemento->prox = Head; 
+
+Head = NovoElemento; 
+
+} 
+
+} 
+
+ 
+ 
+
+void InserirFim() 
+
+{ 
+
+int op, num, pos, c; 
+
+float duracao; 
+
+char musica[30]; 
+
+char banda_artista[30]; 
+
+ 
+ 
+
+printf("Nome da música: "); 
+
+gets(musica); 
+
+printf("Nome da banda/artista: "); 
+
+gets(banda_artista); 
+
+printf("duração(minutos): "); 
+
+scanf_s("%f", &duracao); 
+
+while ((c = getchar()) != '\n' && c != EOF) {} 
+
+ 
+ 
+
+ElementoDaLista_Simples* NovoElemento; 
+
+NovoElemento = (struct ElementoDaLista_Simples*)malloc(sizeof(struct ElementoDaLista_Simples)); 
+
+ElementoDaLista_Simples* ElementoVarredura; 
+
+ElementoVarredura = (struct ElementoDaLista_Simples*)malloc(sizeof(struct ElementoDaLista_Simples)); 
+
+ 
+ 
+
+strcpy(NovoElemento->dado, musica); 
+
+strcpy(NovoElemento->dado3, banda_artista); 
+
+NovoElemento->dado2 = duracao; 
+
+ 
+ 
+
+ 
+ 
+
+if (Head == NULL) 
+
+{ 
+
+Head = NovoElemento; 
+
+Head->prox = NULL; 
+
+} 
+
+else 
+
+{ 
+
+ElementoVarredura = Head; 
+
+while (ElementoVarredura->prox != NULL) 
+
+ElementoVarredura = ElementoVarredura->prox; 
+
+ 
+ 
+
+ElementoVarredura->prox = NovoElemento; 
+
+NovoElemento->prox = NULL; 
+
+} 
+
+} 
+
+ 
+ 
+
+void InserirMeio() 
+
+{ 
+
+ 
+ 
+
+int op, num, posicao, c; 
+
+float duracao; 
+
+char musica[30]; 
+
+char banda_artista[30]; 
+
+ 
+ 
+
+printf("Nome da música: "); 
+
+gets(musica); 
+
+printf("Nome da banda/artista: "); 
+
+gets(banda_artista); 
+
+printf("duração(minutos): "); 
+
+scanf_s("%f", &duracao); 
+
+printf("Digite a posicao que deseja inserir: "); 
+
+scanf_s("%d", &posicao); 
+
+while ((c = getchar()) != '\n' && c != EOF) {} 
+
+ 
+ 
+
+ElementoDaLista_Simples* NovoElemento; 
+
+NovoElemento = (struct ElementoDaLista_Simples*)malloc(sizeof(struct ElementoDaLista_Simples)); 
+
+ElementoDaLista_Simples* ElementoVarredura; 
+
+ElementoVarredura = (struct ElementoDaLista_Simples*)malloc(sizeof(struct ElementoDaLista_Simples)); 
+
+ElementoDaLista_Simples* ElementoAuxiliar; 
+
+ElementoAuxiliar = (struct ElementoDaLista_Simples*)malloc(sizeof(struct ElementoDaLista_Simples)); 
+
+ 
+ 
+
+strcpy(NovoElemento->dado, musica); 
+
+strcpy(NovoElemento->dado3, banda_artista); 
+
+NovoElemento->dado2 = duracao; 
+
+ 
+ 
+
+if (posicao == 0) 
+
+{ 
+
+Head = NovoElemento; 
+
+Head->prox = NULL; 
+
+} 
+
+else 
+
+{ 
+
+ElementoVarredura = Head; 
+
+for (int i = 0; i < posicao - 1; i++) 
+
+ElementoVarredura = ElementoVarredura->prox; 
+
+ 
+ 
+
+ElementoAuxiliar = ElementoVarredura->prox; 
+
+ElementoVarredura->prox = NovoElemento; 
+
+NovoElemento->prox = ElementoAuxiliar; 
+
+} 
+
+} 
+
+ 
+ 
+
+ 
+ 
+
+void Listar() 
+
+{ 
+
+ElementoDaLista_Simples* ElementoVarredura; 
+
+ElementoVarredura = (struct ElementoDaLista_Simples*)malloc(sizeof(struct ElementoDaLista_Simples)); 
+
+ 
+ 
+
+ElementoVarredura = Head; 
+
+if (ElementoVarredura == NULL) { 
+
+ 
+ 
+
+return; 
+
+} 
+
+printf("\t\t\t\tLISTA DE MÚSICAS\n"); 
+
+printf("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n"); 
+
+ 
+ 
+
+printf("\tMÚSICA ARTISTA/BANDA DURAÇÃO\n"); 
+
+while (ElementoVarredura != NULL) { 
+
+int tam = 26 - strlen(ElementoVarredura->dado); //usado para alinhar a duração das musicas 
+
+int t = 0; 
+
+printf("\t%s", ElementoVarredura->dado); 
+
+while (t < tam) { 
+
+printf(" "); //usado para alinhar a duração das musicas  
+
+t++; 
+
+} 
+
+printf("%s", ElementoVarredura->dado3); 
+
+int tam2 = 33 - strlen(ElementoVarredura->dado3); // //calcula o quanto de espaço deve ser impresso 
+
+int t2 = 0; 
+
+while (t2 < tam2) { 
+
+printf(" "); //usado para alinhar a duração das musicas  
+
+t2++; 
+
+} 
+
+printf("%.2f\n", ElementoVarredura->dado2); 
+
+ 
+ 
+
+ElementoVarredura = ElementoVarredura->prox; 
+
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+
+} 
+
+printf("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="); 
+
+ 
+ 
+
+printf("\n"); 
+
+ 
+ 
+
+system("pause"); 
+
+ 
+
+return; 
+
+} 
